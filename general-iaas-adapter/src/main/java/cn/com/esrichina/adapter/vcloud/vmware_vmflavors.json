@@ -1,0 +1,29 @@
+[		
+	{ "name":"small",
+	  "id":"small001",
+	  "cpu":1,
+	  "memory":2048,
+	  "disk":20
+	},
+	
+	{ "name":"medium",
+	  "id":"medium001",
+	  "cpu":2,
+	  "memory":4096,
+	  "disk":20
+	},
+	
+	{ "name":"large",
+	  "id":"large001",
+	  "cpu":2,
+	  "memory":8192,
+	  "disk":20
+	},
+	
+	{ "name":"verylarge",
+	  "id":"verylarge001",
+	  "cpu":4,
+	  "memory":8192,
+	  "disk":20
+	}
+]
