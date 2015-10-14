@@ -13,7 +13,6 @@ import cn.com.esrichina.adapter.utils.time.Day;
 import cn.com.esrichina.adapter.utils.time.TimePeriod;
 
 public class NovaMethod extends AbstractMethod {
-	private NovaOpenStack openstack;
     public NovaMethod(NovaOpenStack openstack) { super(openstack); }
     
     public void deleteServers(final String resource, final String resourceId) throws AdapterException {

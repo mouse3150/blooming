@@ -158,7 +158,7 @@ public abstract class AbstractMethod {
            
             
 
-            if( std.isInfoEnabled() ) {
+            if(std.isInfoEnabled()) {
                 std.info("authenticateKeystone(): Attempting keystone authentication...");
             }
             
@@ -182,7 +182,7 @@ public abstract class AbstractMethod {
                 json.put("RAX-KSKEY:apiKeyCredentials", credentials);
             }
             else {
-                if( std.isInfoEnabled() ) {
+                if(std.isInfoEnabled()) {
                     std.info("Standard authentication");
                 }
                 credentials.put("username", accessPublic);
@@ -192,7 +192,7 @@ public abstract class AbstractMethod {
             
             
             
-            if( std.isDebugEnabled() ) {
+            if(std.isDebugEnabled()) {
                 std.debug("authenticateKeystone(): tenantId=" + account);
             }
             if( !openstack.getProviderName().equals(OpenStackProvider.RACKSPACE) ) {
@@ -219,7 +219,7 @@ public abstract class AbstractMethod {
             HttpPost post = new HttpPost(endpoint + "/tokens");
             
             post.addHeader("Content-Type", "application/json");
-            if( wire.isDebugEnabled() ) {
+            if(wire.isDebugEnabled()) {
                 wire.debug(post.getRequestLine().toString());
                 for( Header header : post.getAllHeaders() ) {
                     wire.debug(header.getName() + ": " + header.getValue());
@@ -242,7 +242,7 @@ public abstract class AbstractMethod {
 
             try {
                 response = client.execute(post);
-                if( wire.isDebugEnabled() ) {
+                if(wire.isDebugEnabled()) {
                     wire.debug(response.getStatusLine().toString());
                     for( Header header : response.getAllHeaders() ) {
                         wire.debug(header.getName() + ": " + header.getValue());
@@ -259,7 +259,7 @@ public abstract class AbstractMethod {
 
             std.debug("HTTP STATUS: " + code);
 
-            if( code != HttpStatus.SC_OK ) {
+            if(code != HttpStatus.SC_OK) {
                 if( code == 401 || code == 405 ) {
                     std.warn("authenticateKeystone(): Authentication failed");
                     return null;
@@ -520,7 +520,7 @@ public abstract class AbstractMethod {
                 try {
                     ProviderContext ctx = openstack.getContext();
                     client = getClient();
-                    HttpGet get = new HttpGet(endpoint);
+                    HttpGet get = new HttpGet(endpoint.trim());
 
                     get.addHeader("Content-Type", "application/json");
                     get.addHeader("X-Auth-User", accessPublic);
@@ -697,7 +697,7 @@ public abstract class AbstractMethod {
         HttpClient client = null;
         try {
             client = getClient();
-            HttpGet get = new HttpGet(endpoint);
+            HttpGet get = new HttpGet(endpoint.trim());
 
             ProviderContext ctx = openstack.getContext();
             String account;
@@ -1056,7 +1056,8 @@ public abstract class AbstractMethod {
         HttpClient client = null;
         try {
             client = getClient();
-            HttpGet get = new HttpGet(resource == null ? endpoint : endpoint + resource);
+            
+            HttpGet get = new HttpGet((resource == null ? endpoint : endpoint + resource).trim());
             
             get.addHeader("Content-Type", "application/json");
             get.addHeader("X-Auth-Token", authToken);
@@ -1177,13 +1178,13 @@ public abstract class AbstractMethod {
 
                     if( entity != null ) {
                         data = EntityUtils.toString(entity);
-                        if( wire.isDebugEnabled() ) {
+                        if(wire.isDebugEnabled()) {
                             wire.debug(data);
                             wire.debug("");
                         }
                     }
                 }
-                catch( IOException e ) {
+                catch(IOException e) {
                     std.error("Failed to read response error due to a cloud I/O error: " + e.getMessage());
                     e.printStackTrace();
                     throw new AdapterException(e);
@@ -1209,16 +1210,16 @@ public abstract class AbstractMethod {
         Logger std = NovaOpenStack.getLogger(NovaOpenStack.class, "std");
         Logger wire = NovaOpenStack.getLogger(NovaOpenStack.class, "wire");
         
-        if( std.isTraceEnabled() ) {
+        if(std.isTraceEnabled()) {
             std.trace("enter - " + AbstractMethod.class.getName() + ".getStream(" + authToken + "," + endpoint + "," + resource + ")");
         }
-        if( wire.isDebugEnabled() ) {
+        if(wire.isDebugEnabled()) {
             wire.debug("--------------------------------------------------------> " + endpoint + resource);
             wire.debug("");
         }
         try {
             HttpClient client = getClient();
-            HttpGet get = new HttpGet(endpoint + resource);
+            HttpGet get = new HttpGet((endpoint + resource).trim());
             
             get.addHeader("Content-Type", "application/json");
             get.addHeader("X-Auth-Token", authToken);
@@ -1635,7 +1636,7 @@ public abstract class AbstractMethod {
         HttpClient client = null;
         try {
             client = getClient();
-            HttpPost post = new HttpPost(endpoint + resource);
+            HttpPost post = new HttpPost((endpoint + resource).trim());
             
             post.addHeader("Content-Type", "application/json");
             post.addHeader("X-Auth-Token", authToken);
@@ -1873,7 +1874,7 @@ public abstract class AbstractMethod {
         HttpClient client = null;
         try {
             client = getClient();
-            HttpPost post = new HttpPost(endpoint + resource);
+            HttpPost post = new HttpPost((endpoint + resource).trim());
             
             post.addHeader("Content-Type", "application/json");
             post.addHeader("X-Auth-Token", authToken);
@@ -2056,7 +2057,7 @@ public abstract class AbstractMethod {
         HttpClient client = null;
         try {
             client = getClient();
-            HttpPost post = new HttpPost(endpoint + resource);
+            HttpPost post = new HttpPost((endpoint + resource).trim());
             
             post.addHeader("Content-Type", "application/octet-stream");
             post.addHeader("X-Auth-Token", authToken);
@@ -2224,7 +2225,7 @@ public abstract class AbstractMethod {
         HttpClient client = null;
         try {
             client = getClient();
-            HttpPut put = new HttpPut(endpoint + resource);
+            HttpPut put = new HttpPut((endpoint + resource).trim());
             
             put.addHeader("Content-Type", "application/json");
             put.addHeader("X-Auth-Token", authToken);
@@ -2385,7 +2386,7 @@ public abstract class AbstractMethod {
         HttpClient client = null;
         try {
             client = getClient();
-            HttpPut put = new HttpPut(endpoint + resource);
+            HttpPut put = new HttpPut((endpoint + resource).trim());
             
             put.addHeader("Content-Type", "application/json");
             put.addHeader("X-Auth-Token", authToken);
@@ -2518,7 +2519,7 @@ public abstract class AbstractMethod {
         HttpClient client = null;
         try {
             client = getClient();
-            HttpPut put = new HttpPut(endpoint + resource);
+            HttpPut put = new HttpPut((endpoint + resource).trim());
             
             put.addHeader("Content-Type", "application/octet-stream");
             put.addHeader("X-Auth-Token", authToken);

@@ -27,7 +27,8 @@ import cn.com.esrichina.adapter.utils.time.TimePeriod;
 public class NovaOpenStack implements IaaSService {
 	
 	private ProviderContext context;
-    static private final Logger logger = getLogger(NovaOpenStack.class, "std");
+    
+	static private final Logger logger = getLogger(NovaOpenStack.class, "std");
 
     static private String getLastItem(String name) {
         int idx = name.lastIndexOf('.');
@@ -71,6 +72,10 @@ public class NovaOpenStack implements IaaSService {
     }
     
     public NovaOpenStack() { }
+    
+    public NovaOpenStack(ProviderContext context) {
+    	this.context = context;
+    }
     
     @SuppressWarnings("finally")
 	public synchronized AuthenticationContext getAuthenticationContext() throws AdapterException {
@@ -159,7 +164,7 @@ public class NovaOpenStack implements IaaSService {
 
                     return Integer.parseInt(d[0]);
                 }
-                catch( NumberFormatException ignore ) {
+                catch(NumberFormatException ignore ) {
                     // ignore
                 }
             }
