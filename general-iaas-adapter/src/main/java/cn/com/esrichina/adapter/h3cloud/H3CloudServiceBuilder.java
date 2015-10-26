@@ -30,7 +30,7 @@ public class H3CloudServiceBuilder extends IaaSServiceBuilder {
 				properties.getProperty(IAAS_PLATFORM + "."
 						+ Constants.PROP_KEY_CREDENTIAL),
 				"Please config the credential(password) of the H3Cloud!");
-		IaaSService iaaSServcie = new H3CloudService(endpoint, username, password);;
+		IaaSService iaaSServcie = new H3CloudService(endpoint, username, password);
 		
 		return iaaSServcie;
 	}
