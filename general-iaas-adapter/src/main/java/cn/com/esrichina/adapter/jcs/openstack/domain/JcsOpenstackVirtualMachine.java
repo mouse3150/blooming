@@ -1,5 +1,7 @@
 package cn.com.esrichina.adapter.jcs.openstack.domain;
 
+import org.jclouds.openstack.nova.v2_0.domain.Server;
+
 import cn.com.esrichina.adapter.AdapterException;
 import cn.com.esrichina.adapter.commons.GuestCustomizationOptions;
 import cn.com.esrichina.adapter.commons.HardwareOptions;
@@ -17,6 +19,12 @@ import cn.com.esrichina.adapter.domain.IVirtualMachine;
 
 public class JcsOpenstackVirtualMachine implements IVirtualMachine {
 
+	private Server server;
+	
+	public JcsOpenstackVirtualMachine(Server server) {
+		this.server = server;
+	}
+	
 	@Override
 	public IDatacenter getDatacenter() throws AdapterException {
 		// TODO Auto-generated method stub
@@ -31,20 +39,43 @@ public class JcsOpenstackVirtualMachine implements IVirtualMachine {
 
 	@Override
 	public String getName() throws AdapterException {
-		// TODO Auto-generated method stub
+		if(server != null) {
+			return server.getName();
+		}
 		return null;
 	}
 
 	@Override
 	public String getId() throws AdapterException {
-		// TODO Auto-generated method stub
+		if(server != null) {
+			return server.getId();
+		}
 		return null;
 	}
 
 	@Override
 	public VmStatus getStatus() throws AdapterException {
-		// TODO Auto-generated method stub
-		return null;
+		VmStatus status = VmStatus.UNKNOWN;
+		
+		if(server != null) {
+			switch(server.getStatus()) {
+				case ACTIVE  : 
+					status = VmStatus.RUNNING; break;
+				case BUILD  : 
+					status = VmStatus.PENDING; break;
+				case SUSPENDED  : 
+					status = VmStatus.SUSPENDED; break;
+				case REBOOT  : 
+					status = VmStatus.REBOOTING; break;
+				case SHUTOFF  : 
+					status = VmStatus.STOPPED; break;
+				case ERROR  : 
+					status = VmStatus.ERROR; break;
+				default:
+					break;
+			}
+		}
+		return status;
 	}
 
 	@Override

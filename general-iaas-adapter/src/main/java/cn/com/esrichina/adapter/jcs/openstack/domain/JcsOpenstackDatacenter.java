@@ -1,6 +1,12 @@
 package cn.com.esrichina.adapter.jcs.openstack.domain;
 
+import java.util.Iterator;
 import java.util.List;
+
+import org.jclouds.openstack.keystone.v2_0.domain.Tenant;
+import org.jclouds.openstack.nova.v2_0.NovaApi;
+import org.jclouds.openstack.nova.v2_0.domain.Server;
+import org.jclouds.openstack.nova.v2_0.features.ServerApi;
 
 import cn.com.esrichina.adapter.AdapterException;
 import cn.com.esrichina.adapter.commons.DatacenterComputeRuntimeInfo;
@@ -20,24 +26,35 @@ import cn.com.esrichina.adapter.feature.HostFeature;
 import cn.com.esrichina.adapter.feature.ImageFeature;
 import cn.com.esrichina.adapter.feature.VirtualMachineFeature;
 
+import com.google.common.collect.FluentIterable;
+
 public class JcsOpenstackDatacenter implements IDatacenter {
+	private String name;
+	private String id;
+	private NovaApi novaApi;
+	private String region;
+	private Tenant tenant;
+	public JcsOpenstackDatacenter(String name, String id, String region, Tenant tenant, NovaApi novaApi) {
+		this.name = name;
+		this.id = id;
+		this.region = region;
+		this.tenant = tenant;
+		this.novaApi = novaApi;
+	}
 
 	@Override
 	public String getName() throws AdapterException {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public String getId() throws AdapterException {
-		// TODO Auto-generated method stub
-		return null;
+		return id;
 	}
 
 	@Override
 	public IOrganization getOragnization() throws AdapterException {
-		// TODO Auto-generated method stub
-		return null;
+		return new JcsOpenstackOrganization(region, tenant, novaApi);
 	}
 
 	@Override
@@ -55,21 +72,53 @@ public class JcsOpenstackDatacenter implements IDatacenter {
 	@Override
 	public IVirtualMachine getVirtualMachine(String vmName)
 			throws AdapterException {
-		// TODO Auto-generated method stub
+		ServerApi serverApi = novaApi.getServerApi(region);
+		
+		 for (Server server : serverApi.listInDetail().concat()) {
+              
+         }
 		return null;
 	}
 
 	@Override
 	public IVirtualMachine[] getVirtualMachines() throws AdapterException {
-		// TODO Auto-generated method stub
-		return null;
+		ServerApi serverApi = novaApi.getServerApi(region);
+		FluentIterable<Server> itrableServers = serverApi.listInDetail().concat();
+		
+		if(itrableServers == null) {
+			return null;
+		}
+		
+		Iterator<Server> servers = itrableServers.iterator();
+		IVirtualMachine[] vms = new JcsOpenstackVirtualMachine[itrableServers.size()];
+		int index= 0 ;
+		while(servers.hasNext()) {
+			JcsOpenstackVirtualMachine vm = new JcsOpenstackVirtualMachine(servers.next());
+			vms[index] = vm;
+			index++;
+		}
+		return vms;
 	}
 
 	@Override
 	public IVirtualMachine[] getVirtualMachines(String site)
 			throws AdapterException {
-		// TODO Auto-generated method stub
-		return null;
+		ServerApi serverApi = novaApi.getServerApi(region);
+		FluentIterable<Server> itrableServers = serverApi.listInDetail().concat();
+		
+		if(itrableServers == null) {
+			return null;
+		}
+		
+		Iterator<Server> servers = itrableServers.iterator();
+		IVirtualMachine[] vms = new JcsOpenstackVirtualMachine[itrableServers.size()];
+		int index= 0 ;
+		while(servers.hasNext()) {
+			JcsOpenstackVirtualMachine vm = new JcsOpenstackVirtualMachine(servers.next());
+			vms[index] = vm;
+			index++;
+		}
+		return vms;
 	}
 
 	@Override

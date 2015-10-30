@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.jclouds.ContextBuilder;
 import org.jclouds.logging.slf4j.config.SLF4JLoggingModule;
+import org.jclouds.openstack.keystone.v2_0.KeystoneApi;
 import org.jclouds.openstack.nova.v2_0.NovaApi;
 
 import cn.com.esrichina.adapter.AdapterException;
@@ -16,8 +17,8 @@ import cn.com.esrichina.adapter.utils.Utils;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.Module;
 
-public class JcsOpenstackServiceBuilder extends  IaaSServiceBuilder {
-	private static final String IAAS_PLATFORM = "openstack";
+public class JcsOpenstackServiceBuilder extends IaaSServiceBuilder {
+	public static final String IAAS_PLATFORM = "openstack";
 	public JcsOpenstackServiceBuilder(Properties properties) {
 		super(properties);
 	}
@@ -52,14 +53,23 @@ public class JcsOpenstackServiceBuilder extends  IaaSServiceBuilder {
 		
 		Iterable<Module> modules = ImmutableSet.<Module>of(new SLF4JLoggingModule());
 
-        String provider = "openstack";
+        String novaProvider = "openstack-nova";
+        String keystoneProvider = "openstack-keystone";
         String identity = tanentname + ":" + username; // tenantName:userName
 
-        NovaApi novaApi = ContextBuilder.newBuilder(provider)
+        NovaApi novaApi = ContextBuilder.newBuilder(novaProvider)
                 .endpoint(endpoint)
                 .credentials(identity, password)
                 .modules(modules)
                 .buildApi(NovaApi.class);
+        
+        
+        KeystoneApi keystoneApi = ContextBuilder.newBuilder(keystoneProvider)
+                .endpoint(endpoint)
+                .credentials(username, password)
+                .modules(modules)
+                .buildApi(KeystoneApi.class);
+        
         Set<String> regions = novaApi.getConfiguredRegions();
 		
         //check region existed.
@@ -67,7 +77,7 @@ public class JcsOpenstackServiceBuilder extends  IaaSServiceBuilder {
         	throw new AdapterException("Region:'" + region + "' is not existed. please check it." );
         }
         
-        IaaSService iaaSServcie = new JcsOpenstackService(region, novaApi);
+        IaaSService iaaSServcie = new JcsOpenstackService(region, tanentname, novaApi, keystoneApi);
 		return iaaSServcie;
 	}
 }
