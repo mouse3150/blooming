@@ -148,6 +148,30 @@ public class H3CloudDatacenter implements IDatacenter {
 		}
 		return vm;
 	}
+	
+	@Override
+	public IVirtualMachine getVirtualMachineById(String vmId)
+			throws AdapterException {
+		H3CloudServer server = serverService.getH3CServerById(vmId);
+		IVirtualMachine vm = null;
+		if(server != null) {
+			vm = new H3CloudVirtualMachine(method, server);
+		}
+		return vm;
+	}
+	
+	@Override
+	public IVirtualMachine getVirtualMachineByName(String vmName)
+			throws AdapterException {
+		IVirtualMachine[] vms = getVirtualMachines();
+		
+		for (int i = 0; i < vms.length; i++) {
+			if(vmName.equals(vms[i].getName())) {
+				return vms[i];
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public IImage getImage(String imageId) throws AdapterException {

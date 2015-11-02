@@ -66,4 +66,12 @@ public class DatacenterComputeRuntimeInfo {
 		this.isLimited = isLimited;
 	}
 
+	@Override
+	public String toString() {
+		return "DatacenterComputeRuntimeInfo [totalCpu=" + totalCpu
+				+ ", usedCpu=" + usedCpu + ", totalMemory=" + totalMemory
+				+ ", usedMemory=" + usedMemory + ", isLimited=" + isLimited
+				+ "]";
+	}
+
 }

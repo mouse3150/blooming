@@ -23,6 +23,20 @@ public interface IHost {
 	 * @throws AdapterException
 	 */
 	String getName() throws AdapterException;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws AdapterException
+	 */
+	String getHostName() throws AdapterException;
+	
+	/**
+	 * 
+	 * @return
+	 * @throws AdapterException
+	 */
+	String getHostId() throws AdapterException;
 
 	/**
 	 * 

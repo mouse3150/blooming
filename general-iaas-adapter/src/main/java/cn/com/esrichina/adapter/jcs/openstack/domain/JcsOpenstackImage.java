@@ -1,4 +1,12 @@
+/*
+ * Copyright (c) 2008-2015, Esri(China), Inc. All Rights Reserved.
+ * @author chenhao
+ * @email chenh@esrichina.com.cn
+ * @since 2015.10.25
+ */
 package cn.com.esrichina.adapter.jcs.openstack.domain;
+
+import org.jclouds.openstack.nova.v2_0.domain.Image;
 
 import cn.com.esrichina.adapter.AdapterException;
 import cn.com.esrichina.adapter.commons.ImageConfiguration;
@@ -7,6 +15,11 @@ import cn.com.esrichina.adapter.domain.IDatacenter;
 import cn.com.esrichina.adapter.domain.IImage;
 
 public class JcsOpenstackImage implements IImage {
+	private Image image;
+	
+	public JcsOpenstackImage(Image image) {
+		this.image = image;
+	}
 
 	@Override
 	public IDatacenter getDatacenter() throws AdapterException {
@@ -16,31 +29,38 @@ public class JcsOpenstackImage implements IImage {
 
 	@Override
 	public String getName() throws AdapterException {
-		// TODO Auto-generated method stub
+		if(image != null) {
+			return image.getName();
+		}
 		return null;
 	}
 
 	@Override
 	public String getId() throws AdapterException {
-		// TODO Auto-generated method stub
+		if(image != null) {
+			return image.getId();
+		}
 		return null;
 	}
 
 	@Override
 	public String getDescription() throws AdapterException {
-		// TODO Auto-generated method stub
+		if(image != null) {
+			return "Openstack image.";
+		}
 		return null;
 	}
 
 	@Override
 	public String getState() throws AdapterException {
-		// TODO Auto-generated method stub
+		if(image != null) {
+			return image.getStatus().name();
+		}
 		return null;
 	}
 
 	@Override
 	public OsInfo getOs() throws AdapterException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -70,7 +90,6 @@ public class JcsOpenstackImage implements IImage {
 
 	@Override
 	public ImageConfiguration getConfiguration() throws AdapterException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

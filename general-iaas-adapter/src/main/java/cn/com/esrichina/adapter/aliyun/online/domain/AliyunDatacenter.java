@@ -84,6 +84,20 @@ public class AliyunDatacenter implements IDatacenter {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public IVirtualMachine getVirtualMachineById(String vmId)
+			throws AdapterException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public IVirtualMachine getVirtualMachineByName(String vmName)
+			throws AdapterException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public IImage getImage(String imageId) throws AdapterException {

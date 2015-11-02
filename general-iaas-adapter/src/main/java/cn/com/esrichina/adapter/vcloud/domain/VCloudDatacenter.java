@@ -904,6 +904,20 @@ public class VCloudDatacenter implements IDatacenter {
 		}
 		return null;
 	}
+	
+	@Override
+	public IVirtualMachine getVirtualMachineById(String vmId)
+			throws AdapterException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public IVirtualMachine getVirtualMachineByName(String vmName)
+			throws AdapterException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public IDatacenter rename(String name) throws AdapterException {

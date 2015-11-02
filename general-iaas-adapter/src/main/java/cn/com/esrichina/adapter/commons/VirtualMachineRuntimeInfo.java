@@ -1,8 +1,11 @@
 package cn.com.esrichina.adapter.commons;
 
 public class VirtualMachineRuntimeInfo {
+	
 	private String privateIp;
     
+	private String publicIp;
+	
 	private String hostName;
     
 	private OsInfo osInfo;
@@ -17,7 +20,15 @@ public class VirtualMachineRuntimeInfo {
         this.privateIp = privateIp;
     }
 
-    public String getHostName() {
+    public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getHostName() {
         return hostName;
     }
 

@@ -58,8 +58,18 @@ public interface IDatacenter {
 	 * @param vmName
 	 * @return
 	 * @throws AdapterException
+//	 * instead of method getVirtualMachineByName {@link IDatacenter#getVirtualMachineByName}
 	 */
+	@Deprecated
 	IVirtualMachine getVirtualMachine(String vmName) throws AdapterException;
+	
+	/**
+	 * get virtual machine by name.
+	 * @param vmName virtual machine name.
+	 * @return
+	 * @throws AdapterException
+	 */
+	public IVirtualMachine getVirtualMachineByName(String vmName) throws AdapterException;
 
 	/**
 	 * 
@@ -82,6 +92,14 @@ public interface IDatacenter {
 	 * @throws AdapterException
 	 */
 	IVirtualMachine getVirtualMachine(String site, String vmName) throws AdapterException;
+	
+	
+	/**
+	 * Every Site has number of virtual machines.
+	 * @return
+	 * @throws AdapterException
+	 */
+	public IVirtualMachine getVirtualMachineById(String vmId) throws AdapterException;
 
 	/**
 	 * 

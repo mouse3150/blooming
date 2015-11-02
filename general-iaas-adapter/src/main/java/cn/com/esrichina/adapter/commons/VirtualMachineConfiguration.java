@@ -84,4 +84,13 @@ public class VirtualMachineConfiguration {
 	public void setVmType(String vmType) {
 		this.vmType = vmType;
 	}
+
+	@Override
+	public String toString() {
+		return "VirtualMachineConfiguration [computeResource="
+				+ computeResource + ", osInfo=" + osInfo + ", diskSize="
+				+ diskSize + ", vmType=" + vmType + "]";
+	}
+	
+	
 }

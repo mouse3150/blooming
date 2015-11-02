@@ -1,3 +1,9 @@
+/*
+ * Copyright (c) 2008-2015, Esri(China), Inc. All Rights Reserved.
+ * @author chenhao
+ * @email chenh@esrichina.com.cn
+ * @since 2015.10.25
+ */
 package cn.com.esrichina.adapter.jcs.openstack;
 
 public enum OpenstackVersion {
@@ -13,7 +19,7 @@ public enum OpenstackVersion {
         else if( version.equalsIgnoreCase("liberty") ) {
             return LIBERTY;
         } else {
-        	throw new JcsOpenstackException("dont support openstack version.");
+        	throw new JcsOpenstackException("don't support openstack version.");
         }
 	}
 }
